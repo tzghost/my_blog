@@ -35,6 +35,8 @@ def article_list(request):
     tag = request.GET.get('tag')
     # 初始化查询集
     article_list = ArticlePost.objects.all()
+    article_new = ArticlePost.objects.all().order_by('-id')[:3]
+    article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
     # 用户搜索逻辑
     if search:
         article_list = ArticlePost.objects.filter(
@@ -67,9 +69,58 @@ def article_list(request):
         'search': search,
         'column': column,
         'tag': tag,
+        'article_new': article_new,
+        'article_views': article_views,
     }
     # render函数：载入模板，并返回context对象
     return render(request, 'article/list.html', context)
+
+def index(request):
+    search = request.GET.get('search')
+    order = request.GET.get('order')
+    column = request.GET.get('column')
+    tag = request.GET.get('tag')
+    # 初始化查询集
+    article_list = ArticlePost.objects.all()
+    article_new = ArticlePost.objects.all().order_by('-id')[:3]
+    article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
+    # 用户搜索逻辑
+    if search:
+        article_list = ArticlePost.objects.filter(
+            Q(title__icontains=search) |
+            Q(body__icontains=search)
+        )
+    else:
+        # 将 search 参数重置为空
+        search = ''
+    # 栏目查询集
+    if column is not None and column.isdigit():
+        article_list = article_list.filter(column=column)
+    # 标签查询集
+    if tag and tag != 'None':
+        article_list = article_list.filter(tags__name__in=[tag])
+    # 查询集排序
+    if order == 'total_views':
+        article_list = article_list.order_by('-total_views')
+    # 每页显示 1 篇文章
+    paginator = Paginator(article_list, 2)
+    # 获取 url 中的页码
+    page = request.GET.get('page')
+    # 将导航对象相应的页码内容返回给 articles
+    articles = paginator.get_page(page)
+
+    # 需要传递给模板（templates）的对象
+    context = {
+        'articles': articles,
+        'order': order,
+        'search': search,
+        'column': column,
+        'tag': tag,
+        'article_new': article_new,
+        'article_views': article_views,
+    }
+    # render函数：载入模板，并返回context对象
+    return render(request, 'index.html', context)
 
 #文章详情
 def article_detail(request,id):
@@ -87,7 +138,7 @@ def article_detail(request,id):
             # 语法高亮扩展
             'markdown.extensions.codehilite',
             # 目录扩展
-            'markdown.extensions.toc',
+            #'markdown.extensions.toc',
         ]
     )
     article.body = md.convert(article.body)
@@ -95,7 +146,7 @@ def article_detail(request,id):
     # 需要传递给模板的对象
     context = {
         'article': article,
-        'toc': md.toc,
+        #'toc': md.toc,
         'comments': comments,
         'comments_form': comment_form,
     }

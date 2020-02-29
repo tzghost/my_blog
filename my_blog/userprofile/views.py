@@ -24,7 +24,7 @@ def user_login(request):
             if user:
                 # 将用户数据保存在 session 中，即实现了登录动作
                 login(request, user)
-                return redirect("article:article-list")
+                return redirect("home")
             else:
                 return HttpResponse("账号或密码输入有误。请重新输入~")
         else:
@@ -39,7 +39,7 @@ def user_login(request):
 # 用户退出
 def user_logout(request):
     logout(request)
-    return redirect("article:article-list")
+    return redirect("home")
 
 # 用户注册
 def user_register(request):

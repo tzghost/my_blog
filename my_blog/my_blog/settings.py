@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@+z-92gxrhb2wg*7)ij--=9$8ep2^r+9-zwcqlk)#fpw+3an(h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -255,4 +255,4 @@ LOGGING = {
 }
 
 # 静态文件收集目录
-STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')

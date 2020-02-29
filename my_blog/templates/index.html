@@ -17,6 +17,39 @@
     <div class="row">
         <div class="col-9">
             <br>
+            <div id="demo" class="carousel slide" data-ride="carousel">
+                  <!-- 指示符 -->
+                  <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                  </ul>
+
+                  <!-- 轮播图片 -->
+                  <div class="carousel-inner rounded ">
+                    <div class="carousel-item active">
+                      <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+                    </div>
+                  </div>
+
+                  <!-- 左右切换按钮 -->
+                  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+
+                </div>
+            <br>
+            <h4>最新文章</h4>
+            <hr style="width: 100%; height: 3px" color="red"/>
             <!-- 列表循环 -->
             {% for article in articles %}
                     <div class="card mt-2">
@@ -187,13 +220,13 @@
                 <div class="card-header bg-white px-0">
                     <strong><i class="fa fa-book mr-2 f-17"></i>分类目录</strong>
                 </div>
-                <li><a href="?search=Kubernetes">Kubernetes</a></li>
-                <li><a href="?search=Python">Python</a></li>
-                <li><a href="?search=Docker">Docker</a></li>
-                <li><a href="?search=Linux">Linux</a></li>
-                <li><a href="?search=Others">Others</a></li>
-                <li><a href="?search=心情随笔">心情随笔</a></li>
-                <li><a href="?search=人文地理">人文地理</a></li>
+                <li><a href="?{{ articles.index }}search=Kubernetes">Kubernetes</a></li>
+                <li><a href="?{{ articles.index }}search=Python">Python</a></li>
+                <li><a href="?{{ articles.index }}search=Docker">Docker</a></li>
+                <li><a href="?{{ articles.index }}search=Linux">Linux</a></li>
+                <li><a href="?{{ articles.index }}search=Others">Others</a></li>
+                <li><a href="?{{ articles.index }}search=心情随笔">心情随笔</a></li>
+                <li><a href="?{{ articles.index }}search=人文地理">人文地理</a></li>
             </div>
         </div>
     </div>

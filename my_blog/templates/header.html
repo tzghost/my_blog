@@ -3,12 +3,12 @@
 {% notifications_unread as unread_count %}
 
 <!-- 定义导航栏 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
     </div>
       <div class="container">
 
         <!-- 导航栏商标 -->
-        <a class="navbar-brand" href="#">陶建文的个人网站
+        <a class="navbar-brand" href="#">关于本站
             <font size="1">----记录生活点滴，分享与创新</font>
         </a>
 
@@ -17,15 +17,19 @@
           <ul class="navbar-nav">
             <!-- 条目 -->
               <li class="nav-item">
-              <a class="nav-link" href="{% url 'article:article-list' %}">首页</a>
+              <a class="nav-link" href="{% url 'home' %}">首页</a>
             </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'article:article-list' %}">技术杂谈</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">心情随笔</a>
+            </li>
+              {% if user.is_authenticated %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'article:article_create' %}">记录成长</a>
               </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'article:article-list' %}">技术杂谈</a>
-            </li>
-
+            {% endif %}
               <!-- Django的 if 模板语句 -->
             {% if user.is_authenticated %}
                 <!-- 如果用户已经登录，则显示用户名下拉框 -->
