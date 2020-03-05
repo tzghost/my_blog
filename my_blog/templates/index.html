@@ -70,7 +70,7 @@
                             <!-- 标题 -->
                             <h5>
                                 <b>
-                                    <a href="{% url 'article:article_detail' article.id %}"
+                                    <a href="{% url 'article:detail_view' article.id %}"
                                     style="color: black;"
                                     >
                                         {{ article.title }}
@@ -80,7 +80,7 @@
                             <!-- 标签 -->
                             <!--<span>
                                 {% for tag in article.tags.all %}
-                                    <a href="{% url 'article:article-list' %}?tag={{ tag }}"
+                                    <a href="{% url 'article:list_view' %}?tag={{ tag }}"
                                        class="badge badge-secondary"
                                     >
                                         标签:{{ tag }}
@@ -205,7 +205,7 @@
                     <i class="fa fa-book mr-2 f-17"></i>博主推荐
                 </div>
                 {% for article in article_views %}
-                    <li><a href="{% url 'article:article_detail' article.id %}">{{ article.title }}</a></li>
+                    <li><a href="{% url 'article:detail_view' article.id %}">{{ article.title }}</a></li>
                 {% endfor %}
             </div>
             <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
@@ -213,7 +213,7 @@
                         <strong><i class="fa fa-book mr-2 f-17"></i>最新发布</strong>
                     </div>
                     {% for article in article_new %}
-                        <li><a href="{% url 'article:article_detail' article.id %}">{{ article.title }}</a></li>
+                        <li><a href="{% url 'article:detail_view' article.id %}">{{ article.title }}</a></li>
                     {% endfor %}
             </div>
             <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">

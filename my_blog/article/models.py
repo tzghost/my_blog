@@ -70,7 +70,7 @@ class ArticlePost(models.Model):
 
     # 获取文章地址
     def get_absolute_url(self):
-        return reverse('article:article_detail', args=[self.id])
+        return reverse('article:detail_view', args=[self.pk])
     # 内部类 class Meta 用于给 model 定义元数据
     class Meta:
         # ordering 指定模型返回的数据的排列顺序

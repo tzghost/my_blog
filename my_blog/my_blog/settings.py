@@ -198,7 +198,7 @@ SITE_ID = 1
 
 # 登录成功后重定向地址
 LOGIN_REDIRECT_URL = '/'
-
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -227,7 +227,7 @@ LOGGING = {
             'formatter': 'simple'
         },
         'mail_admins': {
-            'level': 'ERROR',
+            'level': 'INFO',
             'class': 'django.utils.log.AdminEmailHandler',
             'formatter': 'verbose',
         },
@@ -238,7 +238,7 @@ LOGGING = {
             'formatter': 'verbose',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'when': 'midnight',
-            'backupCount': 10,
+            'backupCount': 1,
         },
     },
     'loggers': {
@@ -248,11 +248,11 @@ LOGGING = {
         },
         'django.request': {
             'handlers': ['file', 'mail_admins'],
-            'level': 'WARNING',
+            'level': 'INFO',
             'propagate': False,
         }
     }
 }
-
+"""
 # 静态文件收集目录
 #STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')

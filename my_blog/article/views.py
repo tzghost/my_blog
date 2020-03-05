@@ -27,134 +27,68 @@ from .models import ArticleColumn
 # 引入评论表单
 from comment.forms import CommentForm
 from django.views import View
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
-def article_list(request):
-    search = request.GET.get('search')
-    order = request.GET.get('order')
-    column = request.GET.get('column')
-    tag = request.GET.get('tag')
-    # 初始化查询集
-    article_list = ArticlePost.objects.all()
-    article_new = ArticlePost.objects.all().order_by('-id')[:3]
-    article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
-    # 用户搜索逻辑
-    if search:
-        article_list = ArticlePost.objects.filter(
-            Q(title__icontains=search) |
-            Q(body__icontains=search)
-        )
-    else:
-        # 将 search 参数重置为空
-        search = ''
-    # 栏目查询集
-    if column is not None and column.isdigit():
-        article_list = article_list.filter(column=column)
-    # 标签查询集
-    if tag and tag != 'None':
-        article_list = article_list.filter(tags__name__in=[tag])
-    # 查询集排序
-    if order == 'total_views':
-        article_list = article_list.order_by('-total_views')
-    # 每页显示 1 篇文章
-    paginator = Paginator(article_list, 3)
-    # 获取 url 中的页码
-    page = request.GET.get('page')
-    # 将导航对象相应的页码内容返回给 articles
-    articles = paginator.get_page(page)
+class ArticleListView(ListView):
+    context_object_name = 'articles'
+    template_name = 'article/list.html'
+    obj = ''
+    def get_queryset(self):
+        queryset = ArticlePost.objects.all()
+        return queryset
 
-    # 需要传递给模板（templates）的对象
-    context = {
-        'articles': articles,
-        'order': order,
-        'search': search,
-        'column': column,
-        'tag': tag,
-        'article_new': article_new,
-        'article_views': article_views,
-    }
-    # render函数：载入模板，并返回context对象
-    return render(request, 'article/list.html', context)
+    def get_context_data(self, **kwargs):
+        article_new = ArticlePost.objects.all().order_by('-id')[:3]
+        article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
+        paginator = Paginator(self.get_queryset(), 3)
+        page = self.request.GET.get('page')
+        articles = paginator.get_page(page)
+        context = {
+            'articles': articles,
+            'article_new': article_new,
+            'article_views': article_views,
+        }
+        kwargs.update(context)
+        return super(ArticleListView, self).get_context_data(**kwargs)
 
-def index(request):
-    search = request.GET.get('search')
-    order = request.GET.get('order')
-    column = request.GET.get('column')
-    tag = request.GET.get('tag')
-    # 初始化查询集
-    article_list = ArticlePost.objects.all()
-    article_new = ArticlePost.objects.all().order_by('-id')[:3]
-    article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
-    # 用户搜索逻辑
-    if search:
-        article_list = ArticlePost.objects.filter(
-            Q(title__icontains=search) |
-            Q(body__icontains=search)
-        )
-    else:
-        # 将 search 参数重置为空
-        search = ''
-    # 栏目查询集
-    if column is not None and column.isdigit():
-        article_list = article_list.filter(column=column)
-    # 标签查询集
-    if tag and tag != 'None':
-        article_list = article_list.filter(tags__name__in=[tag])
-    # 查询集排序
-    if order == 'total_views':
-        article_list = article_list.order_by('-total_views')
-    # 每页显示 1 篇文章
-    paginator = Paginator(article_list, 2)
-    # 获取 url 中的页码
-    page = request.GET.get('page')
-    # 将导航对象相应的页码内容返回给 articles
-    articles = paginator.get_page(page)
-
-    # 需要传递给模板（templates）的对象
-    context = {
-        'articles': articles,
-        'order': order,
-        'search': search,
-        'column': column,
-        'tag': tag,
-        'article_new': article_new,
-        'article_views': article_views,
-    }
-    # render函数：载入模板，并返回context对象
-    return render(request, 'index.html', context)
+class IndexView(ArticleListView):
+    template_name = 'index.html'
 
 #文章详情
-def article_detail(request,id):
-    # 取出相应的文章
-    article = ArticlePost.objects.get(id=id)
-    # 取出文章评论
-    comments = Comment.objects.filter(article=id)
-    # 浏览量 +1
-    article.total_views += 1
-    article.save(update_fields=['total_views'])
-    md = markdown.Markdown(
-        extensions=[
-            # 包含 缩写、表格等常用扩展
-            'markdown.extensions.extra',
-            # 语法高亮扩展
-            'markdown.extensions.codehilite',
-            # 目录扩展
-            #'markdown.extensions.toc',
-        ]
-    )
-    article.body = md.convert(article.body)
-    comment_form = CommentForm()
-    # 需要传递给模板的对象
-    context = {
-        'article': article,
-        #'toc': md.toc,
-        'comments': comments,
-        'comments_form': comment_form,
-    }
-    # 载入模板，并返回context对象
-    return render(request, 'article/detail.html', context)
+class ArticleDetailView(DetailView):
+    queryset = ArticlePost.objects.all().order_by("-updated")
+    context_object_name = 'article'
+    template_name = 'article/detail.html'
+    def get_object(self):
+        obj = super(ArticleDetailView, self).get_object()
+        obj.total_views += 1
+        obj.save(update_fields=['total_views'])
+        md = markdown.Markdown(
+            extensions=[
+                # 包含 缩写、表格等常用扩展
+                'markdown.extensions.extra',
+                # 语法高亮扩展
+                'markdown.extensions.codehilite',
+                # 目录扩展
+                # 'markdown.extensions.toc',
+            ]
+        )
+        obj.body = md.convert(obj.body)
+        return obj
+    def get_context_data(self, **kwargs):
+        comment_form = CommentForm()
+        article_id = self.kwargs.get('pk')
+        comments = Comment.objects.filter(article=article_id)
+        context = {
+            'comments_form': comment_form,
+            'comments': comments,
+        }
+        kwargs.update(context)
+        return super(ArticleDetailView, self).get_context_data(**kwargs)
 
 # 写文章的视图
 # 检查登录
+"""
 @login_required(login_url='/userprofile/login/')
 def article_create(request):
     # 判断用户是否提交数据
@@ -177,7 +111,7 @@ def article_create(request):
             #保存 tags 的多对多关系
             article_post_form.save_m2m()
             # 完成后返回到文章列表
-            return redirect("article:article-list")
+            return redirect("article:list_view")
         # 如果数据不合法，返回错误信息
         else:
             return HttpResponse("表单内容有误，请重新填写。")
@@ -190,6 +124,12 @@ def article_create(request):
         context = { 'article_post_form': article_post_form, 'columns': columns}
         # 返回模板
         return render(request, 'article/create.html', context)
+"""
+
+class ArticleCreateView(CreateView):
+    model = ArticlePost
+    fields = '__all__'
+    template_name = 'article/create.html'
 
 # 删文章
 # 检查登录
@@ -203,7 +143,7 @@ def article_delete(request, id):
     # 调用.delete()方法删除文章
     article.delete()
     # 完成删除后返回文章列表
-    return redirect("article:article-list")
+    return redirect("article:list_view")
 
 # 安全删除文章
 # 检查登录
@@ -215,7 +155,7 @@ def article_safe_delete(request, id):
     if request.method == 'POST':
         article = ArticlePost.objects.get(id=id)
         article.delete()
-        return redirect("article:article-list")
+        return redirect("article:list_view")
     else:
         return HttpResponse("仅允许post请求")
 
@@ -251,7 +191,7 @@ def article_update(request, id):
             article.tags.set(*request.POST.get('tags').split(','), clear=True)
             article.save()
             # 完成后返回到修改后的文章中。需传入文章的 id 值
-            return redirect("article:article_detail", id=id)
+            return redirect("article:detail_view", pk=id)
         # 如果数据不合法，返回错误信息
         else:
             return HttpResponse("表单内容有误，请重新填写。")

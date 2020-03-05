@@ -71,7 +71,7 @@ class ArticlePostViewTests(TestCase):
         article.save()
         self.assertIs(article.total_views, 0)
 
-        url = reverse('article:article_detail', args=(article.id,))
+        url = reverse('article:detail_view', args=(article.id,))
         response = self.client.get(url)
 
         viewed_article = ArticlePost.objects.get(id=article.id)
@@ -88,7 +88,7 @@ class ArticlePostViewTests(TestCase):
         )
         article.save()
 
-        url = reverse('article:article_detail', args=(article.id,))
+        url = reverse('article:detail_view', args=(article.id,))
         response = self.client.get(url)
         viewed_article = ArticlePost.objects.get(id=article.id)
         self.assertIs(viewed_article.updated - viewed_article.created < timezone.timedelta(seconds=0.1), True)

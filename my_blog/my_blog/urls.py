@@ -18,10 +18,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 import notifications.urls
-from article.views import article_list, index
+from article import views
 
 urlpatterns = [
-    path('', index, name='home'),
+    path('', views.IndexView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('article/', include('article.urls', namespace='article')),
     # 用户管理

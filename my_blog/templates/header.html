@@ -20,14 +20,14 @@
               <a class="nav-link" href="{% url 'home' %}">首页</a>
             </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'article:article-list' %}">技术杂谈</a>
+                <a class="nav-link" href="{% url 'article:list_view' %}">技术杂谈</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">心情随笔</a>
             </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'article:article_create' %}">记录成长</a>
+                  <a class="nav-link" href="{% url 'article:create_view' %}">记录成长</a>
               </li>
             {% endif %}
               <!-- Django的 if 模板语句 -->
