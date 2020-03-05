@@ -34,7 +34,7 @@ class ArticleListView(ListView):
     template_name = 'article/list.html'
     obj = ''
     def get_queryset(self):
-        queryset = ArticlePost.objects.all()
+        queryset = ArticlePost.objects.all().order_by('updated')
         return queryset
 
     def get_context_data(self, **kwargs):
