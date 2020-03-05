@@ -34,7 +34,7 @@ class ArticleListView(ListView):
     template_name = 'article/list.html'
     obj = ''
     def get_queryset(self):
-        queryset = ArticlePost.objects.all().order_by('updated')
+        queryset = ArticlePost.objects.all().order_by('-updated')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -214,7 +214,7 @@ def article_update(request, id):
 #点赞数 +1
 class IncreaseLinkesView(View):
     def post(self, request, *args, **kwargs):
-        article = ArticlePost.objects.get(id=kwargs.get('id'))
+        article = ArticlePost.objects.get(id=self.kwargs.get('pk'))
         article.likes += 1
         article.save()
         return HttpResponse('success')
