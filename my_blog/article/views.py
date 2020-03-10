@@ -28,6 +28,9 @@ from .models import ArticleColumn
 from comment.forms import CommentForm
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+
 
 class ArticleListView(ListView):
     context_object_name = 'articles'
@@ -40,7 +43,28 @@ class ArticleListView(ListView):
     def get_context_data(self, **kwargs):
         article_new = ArticlePost.objects.all().order_by('-id')[:3]
         article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
-        paginator = Paginator(self.get_queryset(), 3)
+        search = self.request.GET.get('search')
+        order = self.request.GET.get('order')
+        if search:
+            if order == 'total_views':
+                # 用 Q对象 进行联合搜索
+                self.get_queryset = ArticlePost.objects.filter(
+                    Q(title__icontains=search) |
+                    Q(body__icontains=search)
+                ).order_by('-total_views')
+            else:
+                self.get_queryset = ArticlePost.objects.filter(
+                    Q(title__icontains=search) |
+                    Q(body__icontains=search)
+                )
+        else:
+            # 将 search 参数重置为空
+            search = ''
+            if order == 'total_views':
+                self.get_queryset = ArticlePost.objects.all().order_by('-total_views')
+            else:
+                self.get_queryset = ArticlePost.objects.all()
+        paginator = Paginator(self.get_queryset, 3)
         page = self.request.GET.get('page')
         articles = paginator.get_page(page)
         context = {
@@ -87,77 +111,41 @@ class ArticleDetailView(DetailView):
         return super(ArticleDetailView, self).get_context_data(**kwargs)
 
 # 写文章的视图
-# 检查登录
-"""
-@login_required(login_url='/userprofile/login/')
-def article_create(request):
-    # 判断用户是否提交数据
-    if request.method == 'POST':
-        # 将提交的数据赋值到表单实例中
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    model = ArticlePost
+    template_name = 'article/create.html'
+    form_class = ArticlePostForm
+    success_url = 'article/list.html'
+    def get_queryset(self):
+        columns = ArticleColumn.objects.all()
+        return columns
+    def get_context_data(self, **kwargs):
+        context = {
+            'columns': self.get_queryset,
+        }
+        kwargs.update(context)
+        return super(ArticleCreateView, self).get_context_data(**kwargs)
+
+    def post(self, request, **kwargs):
         article_post_form = ArticlePostForm(request.POST, request.FILES)
-        # 判断提交的数据是否满足模型的要求
         if article_post_form.is_valid():
-            # 保存数据，但暂时不提交到数据库中
             new_article = article_post_form.save(commit=False)
-            # 指定数据库中 id=1 的用户为作者
-            # 如果你进行过删除数据表的操作，可能会找不到id=1的用户
-            # 此时请重新创建用户，并传入此用户的id
             new_article.author = User.objects.get(id=request.user.id)
-            # 将新文章保存到数据库中
 
             if request.POST['column'] != 'none':
                 new_article.column = ArticleColumn.objects.get(id=request.POST['column'])
             new_article.save()
-            #保存 tags 的多对多关系
+
             article_post_form.save_m2m()
-            # 完成后返回到文章列表
             return redirect("article:list_view")
-        # 如果数据不合法，返回错误信息
         else:
             return HttpResponse("表单内容有误，请重新填写。")
-    # 如果用户请求获取数据
-    else:
-        # 创建表单类实例
-        article_post_form = ArticlePostForm()
-        columns = ArticleColumn.objects.all()
-        # 赋值上下文
-        context = { 'article_post_form': article_post_form, 'columns': columns}
-        # 返回模板
-        return render(request, 'article/create.html', context)
-"""
 
-class ArticleCreateView(CreateView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = ArticlePost
-    fields = '__all__'
-    template_name = 'article/create.html'
-
-# 删文章
-# 检查登录
-@login_required(login_url='/userprofile/login/')
-def article_delete(request, id):
-    # 根据 id 获取需要删除的文章
-    article = ArticlePost.objects.get(id=id)
-    # 过滤非作者的用户
-    if request.user != article.author:
-        return HttpResponse("抱歉，你无权删除这篇文章。")
-    # 调用.delete()方法删除文章
-    article.delete()
-    # 完成删除后返回文章列表
-    return redirect("article:list_view")
-
-# 安全删除文章
-# 检查登录
-@login_required(login_url='/userprofile/login/')
-def article_safe_delete(request, id):
-    # 过滤非作者的用户
-    if request.user != article.author:
-        return HttpResponse("抱歉，你无权删除这篇文章。")
-    if request.method == 'POST':
-        article = ArticlePost.objects.get(id=id)
-        article.delete()
-        return redirect("article:list_view")
-    else:
-        return HttpResponse("仅允许post请求")
+    pk_url_kwarg = 'pk'
+    queryset = ArticlePost.objects.filter()
+    success_url = reverse_lazy("article:list_view")
 
 # 更新文章
 # 检查登录

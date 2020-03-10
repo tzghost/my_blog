@@ -22,7 +22,7 @@
                     <div>
                         作者：{{ article.author }}
                         {% if user == article.author %}
-                            · <a href="#" onclick="confirm_delete()">删除文章</a>
+                            · <a href="#" onclick="confirm_safe_delete()">删除文章</a>
                             · <a href="{% url "article:article_update" article.id %}">
                                 编辑文章
                              </a>
@@ -35,7 +35,7 @@
                     <form
                         style="display:none;"
                         id="safe_delete"
-                        action="{% url 'article:article_safe_delete' article.id %}"
+                        action="{% url 'article:delete_view' article.id %}"
                         method="POST"
                         >
                         {% csrf_token %}
@@ -213,21 +213,6 @@
 
 <script>
     // 删除文章的函数
-    function confirm_delete() {
-        // 调用layer弹窗组件
-        layer.open({
-            // 弹窗标题
-            title: "确认删除",
-            // 正文
-            content: "确认删除这篇文章吗？",
-            // 点击确定按钮后调用的回调函数
-            yes: function(index, layero) {
-                // 指定应当前往的 url
-                location.href='{% url "article:article_delete" article.id %}'
-            },
-        })
-    }
-
     function confirm_safe_delete() {
         layer.open({
             title: "确认删除",
