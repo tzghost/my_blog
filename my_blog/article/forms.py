@@ -19,5 +19,15 @@ class ArticlePostForm(forms.ModelForm):
             'body': forms.Textarea(attrs={
                 'class': "form-control",
                 'rows': '12',
-            })
+            }),
+            'column': forms.Select(attrs={
+                'class': "form-control col-3",
+            }),
+            'title': forms.TextInput(attrs={
+                'class': "form-control",
+                'rows': '12',
+            }),
+            'tags': forms.TextInput(attrs={
+                'class': "form-control col-12",
+            }),
         }

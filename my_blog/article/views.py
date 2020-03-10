@@ -194,10 +194,12 @@ def article_update(request, id):
             'article_post_form': article_post_form,
             'columns': columns,
             'tags': ','.join([x for x in article.tags.names()]),
-
         }
         # 将响应返回到模板中
         return render(request, 'article/update.html', context)
+
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+    pass
 
 #点赞数 +1
 class IncreaseLinkesView(View):
