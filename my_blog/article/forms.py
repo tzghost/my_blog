@@ -21,4 +21,3 @@ class ArticlePostForm(forms.ModelForm):
                 'rows': '12',
             })
         }
-
