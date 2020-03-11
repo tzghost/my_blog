@@ -10,11 +10,7 @@ from . import views
 app_name = 'article'
 
 urlpatterns = [
-    # 更新文章
-    #path('article-update/<int:id>/', views.article_update, name='article_update'),
     path('increase-links/<int:pk>/', views.IncreaseLinkesView.as_view(), name='increase_likes'),
-
-    #视图类
     path('detail-view/<int:pk>/', views.ArticleDetailView.as_view(), name='detail_view'),
     path('list-view/', views.ArticleListView.as_view(), name='list_view'),
     path('create-view/', views.ArticleCreateView.as_view(), name='create_view'),
