@@ -30,7 +30,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-
+from django.contrib.messages.views import SuccessMessageMixin
 
 class ArticleListView(ListView):
     context_object_name = 'articles'
@@ -199,7 +199,41 @@ def article_update(request, id):
         return render(request, 'article/update.html', context)
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
-    pass
+    model = ArticlePost
+    template_name = 'article/update.html'
+    context_object_name = "obj"
+    form_class = ArticlePostForm
+
+    def post(self, request, **kwargs):
+        article_post_form = ArticlePostForm(data=request.POST)
+        article = ArticlePost.objects.get(id=self.kwargs.get('pk'))
+        if article_post_form.is_valid():
+            # 保存新写入的 title、body 数据并保存
+            article.title = request.POST['title']
+            article.body = request.POST['body']
+
+            if request.POST['column'] != 'none':
+                # 保存文章栏目
+                article.column = ArticleColumn.objects.get(id=request.POST['column'])
+            else:
+                article.column = None
+
+            if request.FILES.get('avatar'):
+                article.avatar = request.FILES.get('avatar')
+
+            article.tags.set(*request.POST.get('tags').split(','), clear=True)
+            article.save()
+            return redirect("article:detail_view", pk=self.kwargs.get('pk'))
+        else:
+            return HttpResponse("表单内容有误，请重新填写。")
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'article_post_form': self.form_class,
+            'columns': ArticleColumn.objects.all(),
+        }
+        kwargs.update(context)
+        return super(ArticleUpdateView, self).get_context_data(**kwargs)
 
 #点赞数 +1
 class IncreaseLinkesView(View):

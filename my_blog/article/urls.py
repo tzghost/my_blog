@@ -11,7 +11,7 @@ app_name = 'article'
 
 urlpatterns = [
     # 更新文章
-    path('article-update/<int:id>/', views.article_update, name='article_update'),
+    #path('article-update/<int:id>/', views.article_update, name='article_update'),
     path('increase-links/<int:pk>/', views.IncreaseLinkesView.as_view(), name='increase_likes'),
 
     #视图类
@@ -19,5 +19,5 @@ urlpatterns = [
     path('list-view/', views.ArticleListView.as_view(), name='list_view'),
     path('create-view/', views.ArticleCreateView.as_view(), name='create_view'),
     path('delete-view/<int:pk>', views.ArticleDeleteView.as_view(), name='delete_view'),
-    #path('update-view/<int:pk>', views.AriticleUpdateView.as_view(), name='update-view'),
+    path('update-view/<int:pk>', views.ArticleUpdateView.as_view(), name='update-view'),
 ]
