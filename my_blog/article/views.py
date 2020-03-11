@@ -30,12 +30,11 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.contrib.messages.views import SuccessMessageMixin
 
 class ArticleListView(ListView):
     context_object_name = 'articles'
     template_name = 'article/list.html'
-    obj = ''
+    #obj = ''
     def get_queryset(self):
         queryset = ArticlePost.objects.all().order_by('-updated')
         return queryset
@@ -63,7 +62,7 @@ class ArticleListView(ListView):
             if order == 'total_views':
                 self.get_queryset = ArticlePost.objects.all().order_by('-total_views')
             else:
-                self.get_queryset = ArticlePost.objects.all()
+                self.get_queryset = ArticlePost.objects.all().order_by('-updated')
         paginator = Paginator(self.get_queryset, 3)
         page = self.request.GET.get('page')
         articles = paginator.get_page(page)
