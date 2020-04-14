@@ -34,6 +34,23 @@
                                 <!-- 文章内容 -->
                                 <div class="col">
                         <div class="row">
+                            <!-- 分类 -->
+                            {% if article.column %}
+                                <button type="button"
+                                        class="btn btn-sm mb-2
+                                               {% if article.column.title == 'kubernetes' %}
+                                                   btn-success
+                                               {% elif article.column.title == 'python' %}
+                                                   btn-danger
+                                               {% elif article.column.title == 'docker' %}
+                                                   btn-warning
+                                               {% endif %}
+                                           "
+                                >
+                                    分类:{{ article.column }}
+                                </button>
+                            {% endif %}
+                            <h5>&nbsp;&nbsp;</h5>
                             <!-- 标题 -->
                             <h5>
                                 <b>
@@ -58,29 +75,15 @@
                         </div>
                         <!-- 摘要 -->
                         <div>
-                            <p style="color: gray;">
-                                {{ article.body|slice:'50' }}...
-                            </p>
+                            <a href="{% url 'article:detail_view' article.id %}">
+                                <p style="color: gray;">
+                                    {{ article.body|slice:'50' }}...
+                                </p>
+                            </a>
                         </div>
                         <!-- 注脚 -->
-                        <p>
+                        <p align="right">
                             <!-- 附加信息 -->
-                            <!-- 分类 -->
-                            {% if article.column %}
-                                <button type="button"
-                                    class="btn btn-sm mb-2
-                                        {% if article.column.title == 'kubernetes' %}
-                                            btn-success
-                                        {% elif article.column.title == 'python' %}
-                                            btn-danger
-                                        {% elif article.column.title == 'docker' %}
-                                            btn-warning
-                                        {% endif %}
-                                    "
-                                >
-                                    分类:{{ article.column }}
-                                </button>
-                            {% endif %}
                             <span style="color: green;">
                                 <i class="fas fa-eye" style="color: lightskyblue;"></i>
                                 {{ article.total_views }}&nbsp;&nbsp;&nbsp;
