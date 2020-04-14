@@ -48,7 +48,8 @@
                 </div>
                 <!-- 新增点赞按钮 -->
                 <div style="text-align:center;" class="mt-4">
-                    <button class="btn btn-outline-danger"
+                    <div>
+                        <button class="btn btn-outline-danger"
                             type="button"
                             onclick="validate_is_like(
                                      '{% url 'article:increase_likes' article.id %}',
@@ -64,6 +65,14 @@
                             {{ article.likes }}
                         </span>
                     </button>
+                    </div>
+                    <br>
+                    <div>
+                        <img src="/media/avatar/qr.jpg" width="100px" height="100px">
+                    </div>
+                    <div>
+                        <h7>博主微信号</h7>
+                    </div>
                 </div>
                 <!-- 发表评论 -->
                 <hr>
