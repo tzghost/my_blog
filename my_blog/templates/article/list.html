@@ -40,6 +40,10 @@
                                         class="btn btn-sm mb-2
                                                {% if article.column.title == 'kubernetes' %}
                                                    btn-success
+                                               {% elif article.column.title == 'linux' %}
+                                                    btn-info
+                                               {% elif article.column.title == 'shell' %}
+                                                    btn-primary
                                                {% elif article.column.title == 'python' %}
                                                    btn-danger
                                                {% elif article.column.title == 'docker' %}
