@@ -34,7 +34,6 @@ from django.urls import reverse_lazy
 class ArticleListView(ListView):
     context_object_name = 'articles'
     template_name = 'article/list.html'
-    #obj = ''
     def get_queryset(self):
         queryset = ArticlePost.objects.all().order_by('-updated')
         return queryset
@@ -44,6 +43,7 @@ class ArticleListView(ListView):
         article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
         search = self.request.GET.get('search')
         order = self.request.GET.get('order')
+        columns = ArticleColumn.objects.all()
         if search:
             if order == 'total_views':
                 # 用 Q对象 进行联合搜索
@@ -54,7 +54,8 @@ class ArticleListView(ListView):
             else:
                 self.get_queryset = ArticlePost.objects.filter(
                     Q(title__icontains=search) |
-                    Q(body__icontains=search)
+                    Q(column__title=search)
+                    # Q(body__icontains=search)
                 )
         else:
             # 将 search 参数重置为空
@@ -70,6 +71,7 @@ class ArticleListView(ListView):
             'articles': articles,
             'article_new': article_new,
             'article_views': article_views,
+            'columns': columns,
         }
         kwargs.update(context)
         return super(ArticleListView, self).get_context_data(**kwargs)

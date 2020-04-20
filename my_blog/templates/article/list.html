@@ -17,6 +17,14 @@
     <div class="row">
         <div class="col-9">
             <br>
+            <div class="col-9 row">
+                {% for column in columns %}
+                    <div class="margin-left:5px margin-right:5px">
+                        <button class="btn "><a href="{% url 'article:list_view' %}?search={{ column }}">{{ column }}</a></button>
+                        &nbsp;
+                    </div>
+                {% endfor %}
+            </div>
             <!-- 列表循环 -->
             {% for article in articles %}
                     <div class="card mt-2">
