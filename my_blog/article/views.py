@@ -43,6 +43,7 @@ class ArticleListView(ListView):
         article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
         search = self.request.GET.get('search')
         order = self.request.GET.get('order')
+        tag = self.request.GET.get('tag')
         columns = ArticleColumn.objects.all()
         if search:
             if order == 'total_views':
@@ -57,6 +58,12 @@ class ArticleListView(ListView):
                     Q(column__title=search)
                     # Q(body__icontains=search)
                 )
+        elif tag and tag != 'None':
+            self.get_queryset = ArticlePost.objects.filter(
+                Q(tags__name__in=[tag]) |
+                Q(column__title=tag) |
+                Q(title__icontains=tag)
+            )
         else:
             # 将 search 参数重置为空
             search = ''
@@ -72,6 +79,7 @@ class ArticleListView(ListView):
             'article_new': article_new,
             'article_views': article_views,
             'columns': columns,
+            'tag': tag,
         }
         kwargs.update(context)
         return super(ArticleListView, self).get_context_data(**kwargs)

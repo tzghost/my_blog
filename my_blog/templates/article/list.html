@@ -73,17 +73,6 @@
                                     </a>
                                 </b>
                             </h5>
-                            <!-- 标签 -->
-                            <!--<span>
-                                {% for tag in article.tags.all %}
-                                    <a href="{% url 'article:list_view' %}?tag={{ tag }}"
-                                       class="badge badge-secondary"
-                                    >
-                                        标签:{{ tag }}
-                                    </a>
-                                {% endfor %}
-                            </span>
-                            -->
                         </div>
                         <!-- 摘要 -->
                         <div>
@@ -112,6 +101,16 @@
                             <span style="color: darkred;">
                                 <i class="fas fa-clock" style="color: red;"></i>
                                 更新于{{ article.updated|date:'Y-m-d' }}
+                            </span>
+                            <!-- 标签 -->
+                            <span>
+                                {% for tag in article.tags.all %}
+                                        <a href="{% url 'article:list_view' %}?tag={{ tag }}"
+                                           class="badge badge-secondary"
+                                        >
+                                            被贴了&nbsp;{{ tag }}&nbsp;标签
+                                        </a>
+                                {% endfor %}
                             </span>
                         </p>
                     </div>
@@ -212,12 +211,24 @@
                 <div class="card-header bg-white px-0">
                     <strong><i class="fa fa-book mr-2 f-17"></i>分类目录</strong>
                 </div>
-                <li><a href="?search=Kubernetes">Kubernetes</a></li>
-                <li><a href="?search=Python">Python</a></li>
-                <li><a href="?search=Docker">Docker</a></li>
-                <li><a href="?search=Linux">Linux</a></li>
-                <li><a href="?search=Shell">Shell</a></li>
-                <li><a href="?search=Others">Others</a></li>
+                {% for column in columns %}
+                    <li>
+                        <a href="{% url 'article:list_view' %}?search={{ column }}">{{ column }}</a>
+                    </li>
+                {% endfor %}
+            </div>
+            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
+                <div class="card-header bg-white px-0">
+                    <strong><i class="fa fa-book mr-2 f-17"></i>热门标签</strong>
+                    {% for tag in tags %}
+                        &nbsp;{{ tag }}&nbsp;
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
+                <div class="card-header bg-white px-0">
+                    <strong><i class="fa fa-book mr-2 f-17"></i>友情链接</strong>
+                </div>
             </div>
         </div>
     </div>
