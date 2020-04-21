@@ -112,9 +112,21 @@ class ArticleDetailView(DetailView):
         comment_form = CommentForm()
         article_id = self.kwargs.get('pk')
         comments = Comment.objects.filter(article=article_id)
+        pre_article = ArticlePost.objects.filter(id__lt=article_id).order_by('-id')
+        next_article = ArticlePost.objects.filter(id__gt=article_id).order_by('id')
+        if pre_article.count() > 0:
+            pre_article = pre_article[0]
+        else:
+            pre_article = None
+        if next_article.count() > 0:
+            next_article = next_article[0]
+        else:
+            next_article = None
         context = {
             'comments_form': comment_form,
             'comments': comments,
+            'pre_article': pre_article,
+            'next_article': next_article,
         }
         kwargs.update(context)
         return super(ArticleDetailView, self).get_context_data(**kwargs)
