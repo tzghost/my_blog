@@ -63,7 +63,7 @@ class ArticleListView(ListView):
                 Q(tags__name__in=[tag]) |
                 Q(column__title=tag) |
                 Q(title__icontains=tag)
-            )
+            ).distinct()
         else:
             # 将 search 参数重置为空
             search = ''
