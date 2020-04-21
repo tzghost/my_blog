@@ -71,7 +71,7 @@ class ArticleListView(ListView):
                 self.get_queryset = ArticlePost.objects.all().order_by('-total_views')
             else:
                 self.get_queryset = ArticlePost.objects.all().order_by('-updated')
-        paginator = Paginator(self.get_queryset, 5)
+        paginator = Paginator(self.get_queryset, 8)
         page = self.request.GET.get('page')
         articles = paginator.get_page(page)
         context = {

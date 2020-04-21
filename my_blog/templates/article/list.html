@@ -220,7 +220,7 @@
             <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
                 <div class="card-header bg-white px-0">
                     <strong><i class="fa fa-book mr-2 f-17"></i>热门标签</strong>
-                    {% for tag in tags %}
+                    {% for tag in articles.tags.all %}
                         &nbsp;{{ tag }}&nbsp;
                     {% endfor %}
                 </div>
@@ -229,6 +229,13 @@
                 <div class="card-header bg-white px-0">
                     <strong><i class="fa fa-book mr-2 f-17"></i>友情链接</strong>
                 </div>
+                <a href="https://www.runoob.com/docker/docker-tutorial.html">Docker菜鸟教程</a>
+                <a href="https://www.w3school.com.cn/html5/index.asp">HTML 5 教程</a>
+                <a href="https://www.liaoxuefeng.com/wiki/1016959663602400">廖雪峰Python教程</a>
+                <a href="http://kubesphere.qingcloud.com/?utm_campaign=Product&utm_medium=baidu&utm_source=ad&gio_link_id=bR7mO7go">KubeSphere容器平台</a>
+                <a href="https://www.kubernetes.org.cn/">kubernetes中文社区</a>
+                <a href="https://www.docker.com/">Docker官网</a>
+                <a href="https://www.dusaiphoto.com/article/detail/2/">Django搭建个人博客</a>
             </div>
         </div>
     </div>
