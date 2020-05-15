@@ -59,6 +59,10 @@ class ArticlePost(models.Model):
         return article
     # 文章标签
     tags = TaggableManager(blank=True)
+
+    def get_tags(self):
+        return self.tags.names()
+
     # 文章栏目的 “一对多” 外键
     column = models.ForeignKey(
         ArticleColumn,

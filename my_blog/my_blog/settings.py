@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.weibo',
     'allauth.socialaccount.providers.weixin',
-
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -256,3 +257,4 @@ LOGGING = {
 """
 # 静态文件收集目录
 #STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+

@@ -212,7 +212,7 @@
                     <strong><i class="fa fa-book mr-2 f-17"></i>分类目录</strong>
                 </div>
                 {% for column in columns %}
-                    <li>
+                    <li >
                         <a href="{% url 'article:list_view' %}?search={{ column }}">{{ column }}</a>
                     </li>
                 {% endfor %}
@@ -248,3 +248,4 @@
 </div>
 </main>
 {% endblock content %}
+
