@@ -5,13 +5,13 @@
 # @File    : urls.py.py
 
 from django.urls import path, include
-from . import views
+from . import views, apis
 from rest_framework import routers
 
 app_name = 'article'
 
 route = routers.DefaultRouter()
-route.register('articleinfo', views.ArticleViewSet)
+route.register(r'articleinfo', apis.ArticleViewSet)
 
 urlpatterns = [
     path('increase-links/<int:pk>/', views.IncreaseLinkesView.as_view(), name='increase_likes'),

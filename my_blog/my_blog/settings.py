@@ -258,3 +258,15 @@ LOGGING = {
 # 静态文件收集目录
 #STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'article.auth.ExpiringTokenAuthentication',   # 根据自己的实际情况填写路径
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
+

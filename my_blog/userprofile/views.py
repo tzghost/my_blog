@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import UserLoginForm
 from .forms import UserLoginForm, UserRegisterForm
 from django.contrib.auth.models import User
@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm
 from .models import Profile
+from rest_framework.authtoken.models import Token
 
 def user_login(request):
     if request.method == 'POST':
@@ -24,11 +25,16 @@ def user_login(request):
             if user:
                 # 将用户数据保存在 session 中，即实现了登录动作
                 login(request, user)
-                return redirect("home")
+                old_token = Token.objects.filter(user=user)
+                old_token.delete()
+                token = Token.objects.create(user=user)
+                return JsonResponse({"username": user, "token": token.key})
+                #return redirect("home")
             else:
                 return HttpResponse("账号或密码输入有误。请重新输入~")
         else:
             return HttpResponse("账号或密码输入不合法")
+
     elif request.method == 'GET':
         user_login_form = UserLoginForm()
         context = {'form': user_login_form}

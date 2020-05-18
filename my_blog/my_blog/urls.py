@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 import notifications.urls
 from article import views
 
+from rest_framework.documentation import include_docs_urls
+
 urlpatterns = [
     path('', views.IndexView.as_view(), name='home'),
     path('admin/', admin.site.urls),
@@ -31,6 +33,7 @@ urlpatterns = [
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('notice/', include('notice.urls', namespace='notice')),
     path('accounts/', include('allauth.urls')),
+    path('apidocs/', include_docs_urls(title='接口文档')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -30,8 +30,6 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from rest_framework import viewsets, permissions
-from article.serializers import ArticlesSerializer
 
 class ArticleListView(ListView):
     context_object_name = 'articles'
@@ -215,19 +213,6 @@ class IncreaseLinkesView(View):
         article.likes += 1
         article.save()
         return HttpResponse('success')
-
-class IsOwerOrReadOnly(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        elif request.user.is_superuser:
-            return True
-        return obj.author == request.user
-
-class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = ArticlePost.objects.all()
-    serializer_class = ArticlesSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwerOrReadOnly)
 
 
 
