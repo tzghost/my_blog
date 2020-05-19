@@ -2,16 +2,11 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/2/19 14:36
 # @Author  : taojianwen
-# @File    : urls.py.py
+# @File    : view_urls.py.py
 
 from django.urls import path, include
-from . import views, apis
-from rest_framework import routers
-
+from article import views
 app_name = 'article'
-
-route = routers.DefaultRouter()
-route.register(r'articleinfo', apis.ArticleViewSet)
 
 urlpatterns = [
     path('increase-links/<int:pk>/', views.IncreaseLinkesView.as_view(), name='increase_likes'),
@@ -20,5 +15,4 @@ urlpatterns = [
     path('create-view/', views.ArticleCreateView.as_view(), name='create_view'),
     path('delete-view/<int:pk>', views.ArticleDeleteView.as_view(), name='delete_view'),
     path('update-view/<int:pk>', views.ArticleUpdateView.as_view(), name='update-view'),
-    path('api/', include(route.urls)),
 ]

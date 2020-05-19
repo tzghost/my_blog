@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/2/22 9:43
 # @Author  : taojianwen
-# @File    : urls.py
+# @File    : view_urls.py
 
 from django.urls import path
 from . import views

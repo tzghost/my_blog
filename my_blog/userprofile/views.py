@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm
 from .models import Profile
-from rest_framework.authtoken.models import Token
 
 def user_login(request):
     if request.method == 'POST':
@@ -25,11 +24,7 @@ def user_login(request):
             if user:
                 # 将用户数据保存在 session 中，即实现了登录动作
                 login(request, user)
-                old_token = Token.objects.filter(user=user)
-                old_token.delete()
-                token = Token.objects.create(user=user)
-                return JsonResponse({"username": user, "token": token.key})
-                #return redirect("home")
+                return redirect("home")
             else:
                 return HttpResponse("账号或密码输入有误。请重新输入~")
         else:

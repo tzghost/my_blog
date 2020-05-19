@@ -25,7 +25,7 @@ from rest_framework.documentation import include_docs_urls
 urlpatterns = [
     path('', views.IndexView.as_view(), name='home'),
     path('admin/', admin.site.urls),
-    path('article/', include('article.urls', namespace='article')),
+    path('article/', include('article.urls.view_urls', namespace='article')),
     # 用户管理
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
     path('password-reset/', include('password_reset.urls')),
@@ -34,6 +34,8 @@ urlpatterns = [
     path('notice/', include('notice.urls', namespace='notice')),
     path('accounts/', include('allauth.urls')),
     path('apidocs/', include_docs_urls(title='接口文档')),
+    path('api/', include('article.urls.api_urls')),
 ]
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'password_reset',
     'comment',
     'taggit',
+    'taggit_serializer',
     'ckeditor',
     'mptt',
     'notifications',
@@ -261,7 +262,9 @@ LOGGING = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'article.auth.ExpiringTokenAuthentication',   # 根据自己的实际情况填写路径
+        #'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
