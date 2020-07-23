@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -141,19 +140,6 @@ STATICFILES_DIRS = (
 )
 STATIC_URL = '/static/'
 
-# SMTP服务器，改为你的邮箱的smtp!
-EMAIL_HOST = 'smtp.qq.com'
-# 改为你自己的邮箱名！
-#EMAIL_HOST_USER =
-# 你的邮箱密码
-#EMAIL_HOST_PASSWORD =
-# 发送邮件的端口
-EMAIL_PORT = 25
-# 是否使用 TLS
-EMAIL_USE_TLS = True
-# 默认的发件人
-#DEFAULT_FROM_EMAIL =
-
 # 媒体文件地址
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -257,8 +243,7 @@ LOGGING = {
 }
 """
 # 静态文件收集目录
-#STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
