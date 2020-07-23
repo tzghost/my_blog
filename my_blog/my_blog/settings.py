@@ -25,7 +25,7 @@ SECRET_KEY = '@+z-92gxrhb2wg*7)ij--=9$8ep2^r+9-zwcqlk)#fpw+3an(h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "www.bruketao.cn"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
