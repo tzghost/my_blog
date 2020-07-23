@@ -25,7 +25,7 @@ SECRET_KEY = '@+z-92gxrhb2wg*7)ij--=9$8ep2^r+9-zwcqlk)#fpw+3an(h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "www.bruketao.cn"]
 
 # Application definition
 
@@ -259,5 +259,4 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 4,
 }
-
 
