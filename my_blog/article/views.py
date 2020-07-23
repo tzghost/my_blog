@@ -87,6 +87,22 @@ class ArticleListView(ListView):
 class IndexView(ArticleListView):
     template_name = 'index.html'
 
+class ArticleArchiveView(ListView):
+    template_name = 'article/archive.html'
+    def get_queryset(self):
+        queryset = ArticlePost.objects.all().order_by('-created')
+        return queryset
+    def get_context_data(self, **kwargs):
+        articles = self.get_queryset()
+        context = {
+            'articles': articles,
+        }
+        kwargs.update(context)
+        return super(ArticleArchiveView, self).get_context_data(**kwargs)
+
+class ArticleCourseView(ArticleListView):
+    template_name = 'article/course.html'
+
 #文章详情
 class ArticleDetailView(DetailView):
     queryset = ArticlePost.objects.all().order_by("-updated")
