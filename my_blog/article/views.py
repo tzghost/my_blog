@@ -39,8 +39,8 @@ class ArticleListView(ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        article_new = ArticlePost.objects.all().order_by('-id')[:3]
-        article_views = ArticlePost.objects.all().order_by('-total_views')[:3]
+        article_new = ArticlePost.objects.all().order_by('-id')[:5]
+        article_views = ArticlePost.objects.all().order_by('-total_views')[:5]
         search = self.request.GET.get('search')
         order = self.request.GET.get('order')
         tag = self.request.GET.get('tag')
