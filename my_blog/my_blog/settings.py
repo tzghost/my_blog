@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.weixin',
     'rest_framework',
     'rest_framework.authtoken',
+    'DjangoUeditor',
 ]
 
 MIDDLEWARE = [
@@ -139,10 +141,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 STATIC_URL = '/static/'
-
-# 媒体文件地址
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 CKEDITOR_CONFIGS = {
     # django-ckeditor默认使用default配置
@@ -242,8 +240,6 @@ LOGGING = {
     }
 }
 """
-# 静态文件收集目录
-STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -260,3 +256,30 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 4,
 }
 
+UEDITOR_SETTINGS = {
+                       "toolbars": {  # 定义多个工具栏显示的按钮，允行定义多个
+                        "name1": [['source', '|', 'bold', 'italic', 'underline']],
+                        "name2": [],
+                   },
+                   "images_upload":{
+                        "allow_type": "jpg,png",  # 定义允许的上传的图片类型
+                        "max_size": "2222kb"  # 定义允许上传的图片大小，0代表不限制
+                                   },
+                    "files_upload": {
+                        "allow_type": "zip,rar",  # 定义允许的上传的文件类型
+                        "max_size": "2222kb"  # 定义允许上传的文件大小，0代表不限制
+                    },
+                    "image_manager": {
+                        "location": "upload/%Y%m%d/"  # 图片管理器的位置,如果没有指定，默认跟图片路径上传一样
+                    },
+                }
+
+# 静态文件收集目录
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
+
+# 媒体文件地址
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

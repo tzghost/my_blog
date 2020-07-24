@@ -35,7 +35,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('apidocs/', include_docs_urls(title='接口文档')),
     path('api/', include('article.urls.api_urls')),
+    path('ueditor/', include('DjangoUeditor.urls')),
 ]
-
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

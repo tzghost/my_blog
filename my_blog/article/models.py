@@ -7,6 +7,7 @@ from django.urls import reverse
 # Django-taggit
 from taggit.managers import TaggableManager
 from PIL import Image
+from DjangoUeditor.models import UEditorField
 # Create your models here.
 
 class ArticleColumn(models.Model):
@@ -29,8 +30,8 @@ class ArticlePost(models.Model):
     title = models.CharField(max_length=100)
 
     # 文章正文。保存大量文本使用 TextField
-    body = models.TextField()
-
+    #body = models.TextField()
+    body = UEditorField(verbose_name='文章内容')
     # 文章创建时间。参数 default=timezone.now 指定其在创建数据时将默认写入当前的时间
     created = models.DateTimeField(default=timezone.now)
 
