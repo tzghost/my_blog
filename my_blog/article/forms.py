@@ -7,27 +7,48 @@
 from django import forms
 # 引入文章模型
 from .models import ArticlePost
+from DjangoUeditor.widgets import UEditorWidget
+from DjangoUeditor.forms import UEditorField, UEditorModelForm
 
 # 写文章的表单类
-class ArticlePostForm(forms.ModelForm):
+# class ArticlePostForm(forms.ModelForm):
+#     class Meta:
+#         # 指明数据模型来源
+#         model = ArticlePost
+#         # 定义表单包含的字段
+#         fields = ('title', 'body', 'tags', 'avatar', 'column')
+#         widgets = {
+#             'body': forms.Textarea(attrs={
+#                 'class': "form-control",
+#                 'rows': '12',
+#             }),
+#             'column': forms.Select(attrs={
+#                 'class': "form-control col-3",
+#             }),
+#             'title': forms.TextInput(attrs={
+#                 'class': "form-control",
+#                 'rows': '12',
+#             }),
+#             'tags': forms.TextInput(attrs={
+#                 'class': "form-control col-12",
+#             }),
+#         }
+
+class ArticlePostForm(UEditorModelForm):
     class Meta:
-        # 指明数据模型来源
-        model = ArticlePost
-        # 定义表单包含的字段
-        fields = ('title', 'body', 'tags', 'avatar', 'column')
-        widgets = {
-            'body': forms.Textarea(attrs={
-                'class': "form-control",
-                'rows': '12',
-            }),
-            'column': forms.Select(attrs={
-                'class': "form-control col-3",
-            }),
-            'title': forms.TextInput(attrs={
-                'class': "form-control",
-                'rows': '12',
-            }),
-            'tags': forms.TextInput(attrs={
-                'class': "form-control col-12",
-            }),
-        }
+            # 指明数据模型来源
+            model = ArticlePost
+            fields = ('title', 'body', 'tags', 'avatar', 'column')
+            widgets = {
+                 # 'body': forms.Textarea(attrs={'class': "form-control", 'rows': '12', }),
+                'tags': forms.TextInput(attrs={
+                    'class': "form-control col-12", }),
+                 'column': forms.Select(attrs={
+                    'class': "form-control col-3", }),
+                'title': forms.TextInput(attrs={
+                    'class': "form-control", 'rows': '12', }),
+            }
+
+
+
+
