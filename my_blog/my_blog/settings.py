@@ -266,14 +266,27 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+# UEDITOR_SETTINGS = {
+#     "config": {
+#         "toolbars": "full",
+#         "fullscreen": "true",
+#         "width": "100%",
+#         "height": 300,
+#     },
+#     "upload": {
+#         "imageMaxSize": 1024000,
+#         "fileMaxSize": 5120000,
+#     }
+# }
+
 UEDITOR_SETTINGS = {
-    "config": {
-        "toolbars": "full",
-        "fullscreen": "true",
-        "initialFrameWidth": "auto"
-    },
-    "upload": {
-        "imageMaxSize": 1024000,
-        "fileMaxSize": 5120000,
-    }
+    "toolbars": "full",
+    "fullscreen": "true",
+    # "width": "100%",
+    # "height": 300,
+    "imageMaxSize": 1024000,
+    "fileMaxSize": 5120000,
+    "imageCompressBorder": "1094",
+    # "initialFrameWidth": "100%",
+    # "initialFrameHeight": 400,
 }
