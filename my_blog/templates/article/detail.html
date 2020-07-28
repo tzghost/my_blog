@@ -6,7 +6,9 @@
 {% block title %}
     文章详情
 {% endblock title %}
-
+{% block css %}
+    <link rel="stylesheet" href="{% static 'imgself-adaptation.css' %}">
+{% endblock %}
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
 <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
@@ -43,7 +45,7 @@
                     </form>
                 </div>
                 <!-- 文章正文 -->
-                <div class="col-12">
+                <div class="col-12 article-body">
                     <p>{{ article.body|safe }}</p>
                 </div>
                 <!-- 新增点赞按钮 -->
