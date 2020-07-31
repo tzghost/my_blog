@@ -18,10 +18,16 @@
         href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css"
     >
     <link rel="stylesheet"
-      href="{% static 'all.css' %}"
+      href="{% static 'css/all.css' %}"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"
     >
+    <link href="{% static 'js/SyntaxHighlighter/shCoreDefault.css' %}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'js/SyntaxHighlighter/shCore.js' %}"></script>
+    <script>
+        SyntaxHighlighter.all();//执行代码高亮
+    </script>
+
     {% block css %}
     {% endblock %}
     {{ form.media }}

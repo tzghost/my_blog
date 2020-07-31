@@ -7,7 +7,7 @@
     文章详情
 {% endblock title %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'imgself-adaptation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/imgself-adaptation.css' %}">
 {% endblock %}
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
@@ -299,7 +299,7 @@
 
 
 <!-- csrf token -->
-<script src="{% static 'csrf.js' %}"></script>
+<script src="{% static 'js/csrf.js' %}"></script>
 <script>
     // 点赞功能主函数
     function validate_is_like(url, id, likes) {
