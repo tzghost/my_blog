@@ -17,7 +17,8 @@
     <div class="row">
         <div class="col-9">
             <br>
-            <div class="col-9 row">
+            <div class="row">
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 {% for column in columns %}
                     <div class="margin-left:5px margin-right:5px">
                         <button class="btn"><a href="{% url 'article:list_view' %}?search={{ column }}" style="text-decoration: none; color: black">{{ column }}</a></button>
@@ -160,106 +161,7 @@
             </div>
         </div>
         <div class="col-3">
-            <br>
-            <div>
-                <form class="form-group"  >
-                    <label class="sr-only">content</label>
-                    <div class="input-group pagination ">
-                        <input type="text"
-                               class="form-control"
-                               name="search"
-                               placeholder="搜索文章..."
-                               required
-                        >
-                        <div class="input-group-btn input-group-lg">
-                            <button class="btn btn-info rounded-1" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-{#            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">#}
-{#                <div class="card-header bg-white px-0">#}
-{#                    <i class="fa fa-paper-plane mr-2 f-17"></i>关于博主#}
-{#                </div>#}
-{#                <p>#}
-{#                    <font size="1" color="gray">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运维老兵，热爱技术，喜欢专研，坐标深圳</font>#}
-{#                </p>#}
-{#                <div>#}
-{#                    <div align="center">#}
-{#                        <img src="/media/avatar/qr.jpg" width="100px" height="100px">#}
-{#                    </div>#}
-{#                    <div align="center">#}
-{#                        <h7>博主微信号</h7>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
-                <div class="card-header bg-white px-0">
-                    <i class="fa fa-book mr-2 f-17"></i>博主推荐
-                </div>
-                <div>
-                    {% for article in article_views %}
-                            <a href="{% url 'article:detail_view' article.id %}" style="color: black;margin:3px;display:block;text-decoration: none; border-radius: 3px" class="bg-light">
-                                {{ article.title }}
-                            </a>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
-                    <div class="card-header bg-white px-0">
-                        <i class="fa fa-bookmark mr-2 f-17"></i>最新发布
-                    </div>
-                    <div>
-                        {% for article in article_new %}
-                            <a href="{% url 'article:detail_view' article.id %}" style="color: black;margin:3px;display:block; text-decoration: none; border-radius: 3px" class="bg-light">{{ article.title }}</a>
-                        {% endfor %}
-                    </div>
-            </div>
-            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
-                <div class="card-header bg-white px-0">
-                    <i class="fa fa-archive mr-2 f-17"></i>分类目录
-                </div>
-                <div class="card-header bg-white px-1">
-                    {% for column in columns %}
-                        <button style="margin-bottom:5px; border-radius: 5px" class="bg-light">
-                            <li >
-                                <a href="{% url 'article:list_view' %}?search={{ column }}" style="color: grey; text-decoration: none">{{ column }}</a>
-                            </li>
-                        </button>
-                        <br>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
-                <div class="card-header bg-white px-0">
-                    <i class="fa fa-comment mr-2 f-17"></i>热门标签
-                </div>
-                <div class="row card-header bg-white px-1">
-                    {% for article in articles %}
-                        {% for tag in article.tags.all %}
-                            &nbsp;
-                            <button style="margin-bottom:5px; border-radius: 5px" class="bg-light">
-                                <a href="{% url 'article:list_view' %}?tag={{ tag.name }}" style="color: black; text-decoration: none">{{ tag.name }}</a>
-                            </button>
-                            &nbsp;
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
-                <div class="card-header bg-white px-0">
-                    <i class="fa fa-link mr-2 f-17"></i>友情链接
-                </div>
-                <div>
-                    <a href="https://www.runoob.com/docker/docker-tutorial.html" style="color: gray;margin:3px;display:block;text-decoration: none" class="bg-light">Docker菜鸟教程</a>
-                    <a href="https://www.w3school.com.cn/html5/index.asp" style="color: grey;margin:3px;display:block;  text-decoration: none"  class="bg-light ">HTML 5 教程</a>
-                    <a href="https://www.liaoxuefeng.com/wiki/1016959663602400" style="color: grey;margin:3px;display:block; text-decoration: none"  class="bg-light">廖雪峰Python教程</a>
-                    <a href="http://kubesphere.qingcloud.com/?utm_campaign=Product&utm_medium=baidu&utm_source=ad&gio_link_id=bR7mO7go" style="color: grey;margin:3px;display:block; text-decoration: none"  class="bg-light">KubeSphere容器平台</a>
-                    <a href="https://www.kubernetes.org.cn/" style="color: grey;margin:3px;display:block; text-decoration: none"  class="bg-light">kubernetes中文社区</a>
-                    <a href="https://www.docker.com/" style="color: grey;margin:3px;display:block; text-decoration: none"  class="bg-light">Docker官网</a>
-                    <a href="https://www.dusaiphoto.com/article/detail/2/" style="color: grey;margin:3px;display:block; text-decoration: none"  class="bg-light">Django搭建个人博客</a>
-                </div>
-            </div>
+            {% include 'nav.html' %}
         </div>
     </div>
 </div>

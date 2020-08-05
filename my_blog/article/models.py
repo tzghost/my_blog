@@ -15,7 +15,12 @@ class ArticleColumn(models.Model):
     栏目的 Model
     """
     # 栏目标题
+    COURSE_IN_CHOICES = {
+        ('common', 'common'),
+        ('course', 'course'),
+    }
     title = models.CharField(max_length=100, blank=True)
+    course = models.CharField(max_length=100, blank=True, choices=COURSE_IN_CHOICES, default='common')
     created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

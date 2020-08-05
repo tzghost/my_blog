@@ -38,7 +38,19 @@
     {% include 'header.html' %}
     <!-- 预留具体页面的位置 -->
     <div id="wrapper" class="bg-light">
-        {% block content %}{% endblock content %}
+{#        <main>#}
+{#            <div class="container">#}
+{#                <div class="row" >#}
+{#                    <div class="col-9">#}
+{#                        {% block content %}{% endblock content %}#}
+{#                    </div>#}
+{#                    <div class="col-3">#}
+{#                        {% include 'nav.html' %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </main>#}
+            {% block content %}{% endblock content %}
         <div id="push"></div>
     </div>
     <!-- 引入注脚 -->

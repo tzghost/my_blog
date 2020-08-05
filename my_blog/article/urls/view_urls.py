@@ -11,6 +11,7 @@ app_name = 'article'
 urlpatterns = [
     path('increase-links/<int:pk>/', views.IncreaseLinkesView.as_view(), name='increase_likes'),
     path('detail-view/<int:pk>/', views.ArticleDetailView.as_view(), name='detail_view'),
+    path('course-detail-view/<int:pk>/', views.ArticleCourseDetailView.as_view(), name='course_detail_view'),
     path('list-view/', views.ArticleListView.as_view(), name='list_view'),
     path('course-view/', views.ArticleCourseView.as_view(), name='course_view'),
     path('archive-view/', views.ArticleArchiveView.as_view(), name='archive_view'),

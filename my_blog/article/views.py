@@ -100,9 +100,6 @@ class ArticleArchiveView(ListView):
         kwargs.update(context)
         return super(ArticleArchiveView, self).get_context_data(**kwargs)
 
-class ArticleCourseView(ArticleListView):
-    template_name = 'article/course.html'
-
 #文章详情
 class ArticleDetailView(DetailView):
     queryset = ArticlePost.objects.all().order_by("-updated")
@@ -146,6 +143,12 @@ class ArticleDetailView(DetailView):
         }
         kwargs.update(context)
         return super(ArticleDetailView, self).get_context_data(**kwargs)
+
+class ArticleCourseView(ArticleListView):
+    template_name = 'course/course.html'
+
+class ArticleCourseDetailView(ArticleDetailView):
+    template_name = 'course/course_detail.html'
 
 # 写文章的视图
 class ArticleCreateView(LoginRequiredMixin, CreateView):
