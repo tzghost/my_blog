@@ -15,19 +15,23 @@
     <div class="row">
         <div class="col-9">
             <br>
-            <a href="/article/course-detail-view/51/" style="color: gray;margin:3px;display:block; font-size: 30px;
+            <div class="card-deck">
+                <div>
+                    <div class="card mb-4 bg-dark text-white">
+                        <div  style="overflow: hidden">
+                            <a href="/article/course-detail-view/30/" style="color: gray;margin:3px;display:block; font-size: 30px;
                 text-decoration: none"  class="bg-light" class="bg-light">
-                Ansible教程
-            </a>
-            <ul>
-                {% for article in articles %}
-                        {% if article.column.course == 'course' %}
-                            <li>
-                                <a href="{% url 'article:course_detail_view' article.id %}" style="color: black;margin:3px;display:block; text-decoration: none; border-radius: 3px" class="bg-light">{{ article.title }}</a>
-                            </li>
-                        {% endif %}
-                {% endfor %}
-            </ul>
+                                <img src="/media/images/ansible.jpg" style="height: 200px; width: auto">
+                            </a>
+                        </div>
+                        <div class="card-body" style="padding-bottom: 0">
+                            <h5 class="card-title" style="text-align: center">
+                                <a href="/article/course-detail-view/30/" style="color: white;text-decoration: none; width: 100%">Ansible教程</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
