@@ -87,15 +87,33 @@ class ArticleListView(ListView):
 class IndexView(ArticleListView):
     template_name = 'index.html'
 
+#文章归档
 class ArticleArchiveView(ListView):
     template_name = 'article/archive.html'
     def get_queryset(self):
-        queryset = ArticlePost.objects.all().order_by('-created')
+        queryset = ArticlePost.objects.all().order_by('-created')[:10]
         return queryset
     def get_context_data(self, **kwargs):
-        articles = self.get_queryset()
+        year = self.request.GET.get('year')
+        month = self.request.GET.get('month')
+        if year:
+            self.get_queryset = ArticlePost.objects.filter(
+                Q(created__year=year)
+            ).order_by('-created')
+            if month:
+                self.get_queryset = ArticlePost.objects.filter(
+                    Q(created__year=year) &
+                    Q(created__month=month)
+                ).order_by('-created')
+        else:
+            self.get_queryset = ArticlePost.objects.all().order_by('-created')[:10]
+        paginator = Paginator(self.get_queryset, 10)
+        page = self.request.GET.get('page')
+        articles = paginator.get_page(page)
+        dates = ArticlePost.objects.datetimes('created', 'month', order='DESC')
         context = {
             'articles': articles,
+            'dates': dates,
         }
         kwargs.update(context)
         return super(ArticleArchiveView, self).get_context_data(**kwargs)

@@ -38,12 +38,27 @@
                     <i class="fa fa-archive mr-2 f-17"></i>归档
                 </div>
                 <div class="card-header bg-white px-1">
-                        <button style="margin-bottom:5px; border-radius: 5px" class="bg-light">
-                            <li >
-                                <a href="{% url 'article:archive_view'%}">2020</a>
-                            </li>
-                        </button>
-                        <br>
+                    <div>
+                        {% regroup dates by year as dates_by_year %}
+                            <ul>
+                                {% for mouth in dates_by_year %}
+                                <!-- month 是一组月份列表 -->
+                                    <li>
+{#                                        {{ mouth.grouper }} 年#}
+                                        <a href="{% url 'article:archive_view'%}?year={{ mouth.grouper }}">{{ mouth.grouper }} 年</a>
+                                        <!-- grouper 是组头，即某个月份列表的年份 -->
+                                        <ul>
+                                            {% for d in mouth.list %}
+                                            <!-- 再循环显示该年份组下的月份列表即可 -->
+                                                <li>
+                                                    <a href="{% url 'article:archive_view'%}?year={{ mouth.grouper }}&month={{ d | date:'m' }}">{{ d |date:'m' }} 月</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                    </div>
                 </div>
             </div>
         </div>
