@@ -6,7 +6,7 @@
 
 from article.models import ArticlePost
 from rest_framework import viewsets, permissions
-from article.api.serializers import ArticleSerializer
+from apis.serializers import ArticleSerializer
 
 class IsOwerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):

@@ -5,11 +5,9 @@
 # @File    : api_urls.py
 
 from django.urls import path, include
-from article.api import apis
+from apis import apis
 from rest_framework import routers
 from rest_framework.authtoken import views
-
-#app_name = 'article'
 
 route = routers.DefaultRouter()
 route.register(r'articleinfo', apis.ArticleViewSet)

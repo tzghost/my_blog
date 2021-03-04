@@ -34,7 +34,7 @@ urlpatterns = [
     path('notice/', include('notice.urls', namespace='notice')),
     path('accounts/', include('allauth.urls')),
     path('apidocs/', include_docs_urls(title='接口文档')),
-    path('api/', include('article.urls.api_urls')),
+    path('api/', include('my_blog.api_urls')),
     path('ueditor/', include('DjangoUeditor.urls')),
 ]
 
