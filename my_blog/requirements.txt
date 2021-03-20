@@ -22,7 +22,7 @@ et-xmlfile==1.0.1
 idna==2.9
 itypes==1.2.0
 jdcal==1.4.1
-Jinja2==2.11.2
+Jinja2==2.11.3
 jsonfield==3.0.0
 Markdown==3.2.1
 MarkupPy==1.14
